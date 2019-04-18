@@ -1,18 +1,45 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <app-error reload v-if="$store.state.networkError">
+    <template #title
+      >Oops!</template
+    >
+    <template #message>
+      <p>
+        Seems like your network connection is offline. Please try again later!
+      </p>
+    </template>
+  </app-error>
+  <div class="wrapper" v-else>
+    <div class="row flex-wrap">
+      <app-search-box />
+      <app-select-dropdown />
+    </div>
+    <app-cards></app-cards>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import AppCardsVue from '../components/AppCards.vue'
+import AppErrorVue from '../components/AppError.vue'
+import AppSelectBoxVue from '../components/AppSelectBox.vue'
+import AppSearchBoxVue from '../components/AppSearchBox.vue'
 
 export default {
-  name: "home",
+  name: 'home',
+  data() {
+    return {
+      loading: true
+    }
+  },
   components: {
-    HelloWorld
+    'app-cards': AppCardsVue,
+    'app-error': AppErrorVue,
+    'app-select-dropdown': AppSelectBoxVue,
+    'app-search-box': AppSearchBoxVue
+  },
+  beforeRouteEnter(to, from, next) {
+    window.document.title = to.meta.title
+    next()
   }
-};
+}
 </script>

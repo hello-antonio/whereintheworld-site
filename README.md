@@ -1,33 +1,3 @@
-# rest-countries-api
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
 # Frontend Mentor - REST Countries API with color theme switcher
 
 ![Design preview for the REST Countries API with color theme switcher coding challenge](desktop-preview.jpg)
@@ -78,6 +48,34 @@ Practice using version control by creating your own GitHub repository for this c
 Another great tool you could use to get your website live is [Netlify](https://www.netlify.com). They offer a very simple and intuitive way of deploying a site for free and linking the live version to your Git repository.
 
 Also, you could try building this project in a team. This is a great way to practice collaborative coding.
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Suggested workflow
 

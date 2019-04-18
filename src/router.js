@@ -1,26 +1,39 @@
-import Vue from "vue";
-import Router from "vue-router";
-import Home from "./views/Home.vue";
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from './views/Home.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
-      name: "home",
-      component: Home
+      path: '/',
+      name: 'home',
+      component: Home,
+      meta: {
+        title: 'Home'
+      }
     },
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      path: '/country/:id',
+      name: 'detail',
+      props: true,
+      meta: {
+        title: 'About'
+      },
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+        import(/* webpackChunkName: "detail" */ './views/DetailView.vue')
+    },
+    {
+      path: '*',
+      name: 'NotFoundPage',
+      meta: {
+        title: 'We are sorry, the page you requested cannot be found.'
+      },
+      component: () =>
+        import(/* webpackChunkName: "NotFoundPage" */ './views/NotFoundPage.vue')
     }
   ]
-});
+})
