@@ -17,7 +17,7 @@ export default new Router({
       }
     },
     {
-      path: '/country/:id',
+      path: '/country/:id([a-z]{3})',
       name: 'detail',
       props: true,
       meta: {

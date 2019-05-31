@@ -2,22 +2,23 @@
   <app-input class="flex-wrap flex-wrap--start">
     <template>
       <app-button
+        ref="searchButton"
         tabindex="-1"
         aria-disabled="true"
         aria-hidden="true"
         style="min-width:10%"
-        :event="handleSearchInput"
+        :event="handleSearch"
       >
         <template>
           <app-icon iconName="icon-search" class="pad"></app-icon>
         </template>
       </app-button>
       <label
+        v-show="!hasText()"
         id="label1"
         for="search"
         ref="placeholder"
         class="app-input__placeholder theme-light"
-        v-show="!hasQuery()"
         >Search for a country name...</label
       >
       <input
@@ -27,17 +28,18 @@
         id="search"
         name="search"
         maxlength="100"
-        v-model.trim="query"
-        @keydown="handleSearchInput"
+        :value="query"
+        @input="query = $event.target.value"
+        @keydown="handleSearch"
       />
       <app-button
-        ref="clearButton"
+        v-show="hasText()"
+        ref="deleteButton"
         tabindex="-1"
         aria-disabled="true"
         aria-hidden="true"
         style="min-width:10%"
-        :event="handleClearInput"
-        v-show="hasQuery()"
+        :event="handleDelete"
       >
         <template>
           <app-icon iconName="icon-delete" class="pad"></app-icon>
@@ -64,33 +66,31 @@ export default {
     }
   },
   methods: {
-    handleSearchInput({ code, key, type }) {
+    handleSearch({ code, key, type }) {
       let keyCode = code || key
-      if (keyCode === 'Enter' || type === 'click')
-        if (this.hasQuery()) {
-          this.makeSearch()
-        } else {
-          this.clear()
+      if (this.hasText())
+        if (keyCode === 'Enter' || type === 'click') {
+          this.search(this.query)
+          this.$refs.searchButton.$el.focus()
         }
-      if (keyCode === 'Delete') this.clear()
+      if (keyCode === 'Delete') this.handleDelete()
     },
-    handleClearInput() {
-      this.clear()
-      this.$refs.search.focus()
+    handleDelete() {
+      if (this.hasText()) {
+        this.query = ''
+        this.search(this.query)
+        this.$refs.search.focus()
+      }
     },
-    hasQuery() {
-      if (this.query.length > 0) return true
-      else return false
+    hasText() {
+      if (this.query.length > 0) {
+        return true
+      } else {
+        return false
+      }
     },
-    clear() {
-      this.query = ''
-      this.setQuery(this.query)
-    },
-    makeSearch() {
-      this.setQuery(this.query)
-    },
-    setQuery(query) {
-      this.$store.dispatch('setSearchQuery', query)
+    search(str) {
+      this.$store.dispatch('setSearchQuery', str)
     }
   }
 }

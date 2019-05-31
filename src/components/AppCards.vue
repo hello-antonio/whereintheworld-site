@@ -1,12 +1,7 @@
 <template>
   <div class="row">
     <div class="row flex-center flex-wrap--start" key="s0">
-      <skeleton-text
-        animated
-        v-if="isLoading"
-        width="40%"
-        height="40%"
-      ></skeleton-text>
+      <skeleton-text animated v-if="isLoading" width="40%" height="40%"></skeleton-text>
       <p
         class="results"
         id="results"
@@ -29,9 +24,9 @@
         <strong>{{ $store.state.searchQuery }}</strong>
         &ndash; did not match any country in
         {{
-          $store.state.selection == 'All'
-            ? 'the world'
-            : $store.state.selection
+        $store.state.selection == 'All'
+        ? 'the world'
+        : $store.state.selection
         }}.
       </h2>
     </div>
@@ -41,18 +36,14 @@
       name="list-complete"
       tag="ul"
     >
-      <li
-        class="card theme-light"
-        v-for="(card, index) in getData"
-        :key="`uid${index}`"
-      >
+      <li class="card theme-light" v-for="(card, index) in getData" :key="`uid${index}`">
         <router-link
           class="card__link theme-light"
           tabindex="0"
           :to="{
             name: 'detail',
             params: {
-              id: card.alpha3Code ? card.alpha3Code.toLowerCase() : '#'
+              id: card.alpha3Code ? card.alpha3Code.toLowerCase() : 'abc'
             }
           }"
           tag="a"
@@ -60,34 +51,22 @@
           <div class="card__img">
             <skeleton-text animated v-if="isLoading"></skeleton-text>
             <figure class="card__img__wrapper" v-else>
-              <img
-                :src="card.flag"
-                :alt="`country flag of ${card.name}`"
-                loading="lazy"
-              />
+              <img :src="card.flag" :alt="`country flag of ${card.name}`" loading="lazy">
             </figure>
           </div>
           <div class="card__body">
-            <skeleton-text
-              width="50%"
-              animated
-              v-if="isLoading"
-            ></skeleton-text>
+            <skeleton-text width="50%" animated v-if="isLoading"></skeleton-text>
             <div class="card__body__title" v-else>{{ card.name }}</div>
-            <br />
+            <br>
             <div class="card__body__details">
-              <skeleton-text
-                animated
-                v-if="isLoading"
-                height="10vh"
-              ></skeleton-text>
+              <skeleton-text animated v-if="isLoading" height="10vh"></skeleton-text>
               <p v-else>
                 <span class="semibold">Population:</span>
                 {{ card.population.toLocaleString() }}
-                <br />
+                <br>
                 <span class="semibold">Region:</span>
                 {{ card.region }}
-                <br />
+                <br>
                 <span class="semibold">Capital:</span>
                 {{ card.capital }}
               </p>
@@ -97,14 +76,9 @@
       </li>
     </transition-group>
     <div class="row flex-center" key="s1">
-      <app-observer
-        @intersect="intersected"
-        v-show="hasItemsToShow()"
-      ></app-observer>
+      <app-observer @intersect="intersected" v-show="hasItemsToShow()"></app-observer>
       <div class="back-to-top" v-show="!hasItemsToShow()">
-        <a href="#" class="semibold button button--basic theme-light"
-          >Back to top</a
-        >
+        <a href="#" class="semibold button button--basic theme-light">Back to top</a>
       </div>
     </div>
   </div>

@@ -43,15 +43,16 @@ input::placeholder {
   right: 0;
   left: 10%;
   width: 80%;
-  height: auto;
+  /* height: auto; */
   pointer-events: none;
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.5s;
   color: #848484;
+  background-color: transparent !important;
 }
-
-.hide {
+input,
+.app-input__placeholder {
+  padding: 0 0.25em;
+}
+.hidden {
   visibility: hidden;
   opacity: 0;
 }
