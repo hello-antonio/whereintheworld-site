@@ -72,6 +72,7 @@ export default {
         if (keyCode === 'Enter' || type === 'click') {
           this.search(this.query)
           this.$refs.searchButton.$el.focus()
+          document.querySelector('#results').scrollIntoView()
         }
       if (keyCode === 'Delete') this.handleDelete()
     },

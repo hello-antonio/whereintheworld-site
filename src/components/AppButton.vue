@@ -2,10 +2,19 @@
   <a class="button theme-light" :href="href" v-if="type === 'link'">
     <slot>link button</slot>
   </a>
-  <router-link class="button theme-light" :to="to" :tag="tag" v-else-if="type === 'router-link'">
+  <router-link
+    class="button button--link theme-light"
+    :to="to"
+    :tag="tag"
+    v-else-if="type === 'router-link'"
+  >
     <slot>router link button</slot>
   </router-link>
-  <button class="button theme-light" @click="event" v-else-if="type === 'button'">
+  <button
+    class="button theme-light"
+    @click="event"
+    v-else-if="type === 'button'"
+  >
     <slot>button</slot>
   </button>
 </template>
@@ -77,6 +86,10 @@ button,
   .button {
     height: 58px;
   }
+}
+
+.button--link {
+  height: 32px;
 }
 
 .selected {

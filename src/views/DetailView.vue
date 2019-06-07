@@ -1,13 +1,8 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" id="details">
     <div class="row flex-wrap">
       <!-- back button -->
-      <app-button
-        type="router-link"
-        to="/"
-        tag="button"
-        class="button--primary"
-      >
+      <app-button :event="goBack" class="button--primary">
         <template>
           <app-icon iconName="icon-arrow-left"></app-icon>
           <span>Back</span>
@@ -25,10 +20,7 @@
         <div class="content">
           <div class="content__img">
             <skeleton-text v-if="isLoading" animated></skeleton-text>
-            <img
-              :src="getDetails.flag"
-              :alt="`Country flag of ${getDetails.name}`"
-            />
+            <img :src="details.flag" :alt="`Country flag of ${details.name}`" />
           </div>
         </div>
         <div class="content">
@@ -38,7 +30,7 @@
               animated
               v-if="isLoading"
             ></skeleton-text>
-            <span v-else>{{ getDetails.name }}</span>
+            <span v-else>{{ details.name }}</span>
           </h2>
           <div class="content__body flex-row">
             <div class="list">
@@ -46,23 +38,23 @@
               <ul v-else>
                 <li>
                   <span class="semibold">Native Name:</span>
-                  {{ getDetails.nativeName }}
+                  {{ details.nativeName }}
                 </li>
                 <li>
                   <span class="semibold">Population:</span>
-                  {{ getDetails.population.toLocaleString() }}
+                  {{ details.population.toLocaleString() }}
                 </li>
                 <li>
                   <span class="semibold">Region:</span>
-                  {{ getDetails.region }}
+                  {{ details.region }}
                 </li>
                 <li>
                   <span class="semibold">Sub Region:</span>
-                  {{ getDetails.subregion }}
+                  {{ details.subregion }}
                 </li>
                 <li>
                   <span class="semibold">Capital:</span>
-                  {{ getDetails.capital }}
+                  {{ details.capital }}
                 </li>
               </ul>
             </div>
@@ -71,15 +63,15 @@
               <ul v-else>
                 <li>
                   <span class="semibold">Top Level Domain:</span>
-                  {{ getDetails.topLevelDomain[0] }}
+                  {{ details.topLevelDomain[0] }}
                 </li>
                 <li>
                   <span class="semibold">Currencies:</span>
-                  {{ getDetails.currencies.map(curr => curr.name).join(`, `) }}
+                  {{ details.currencies.map(curr => curr.name).join(`, `) }}
                 </li>
                 <li>
                   <span class="semibold">Languages:</span>
-                  {{ getDetails.languages.map(lang => lang.name).join(`, `) }}
+                  {{ details.languages.map(lang => lang.name).join(`, `) }}
                 </li>
               </ul>
             </div>
@@ -89,18 +81,22 @@
                 <li>
                   <span class="semibold">Borders:</span>
                 </li>
-                <template v-if="getDetails.borders.length > 0">
+                <template v-if="details.borders.length > 0">
                   <li
-                    v-for="(name, index) in getDetails.borders"
+                    v-for="(name, index) in details.borders"
                     :key="`ui${index}`"
                   >
                     <app-button
                       type="router-link"
                       style="width: auto"
                       class="button--primary"
-                      :to="
-                        `/country/${getLinks[name].alpha3Code.toLowerCase()}`
-                      "
+                      :to="{
+                        name: 'detail',
+                        params: {
+                          id: getLinks[name].alpha3Code.toLowerCase()
+                        },
+                        hash: '#details'
+                      }"
                     >
                       <template>
                         <span>{{ getLinks[name].name }}</span>
@@ -180,6 +176,9 @@ export default {
           .finally(() => (this.loading = false))
       }
       this.addMetaTitle(`About ${this.country.name}`)
+    },
+    goBack() {
+      this.$router.go(-1)
     }
   },
   created() {
@@ -189,7 +188,7 @@ export default {
     isLoading() {
       return this.loading
     },
-    getDetails() {
+    details() {
       return this.country
     },
     getLinks() {
@@ -204,6 +203,10 @@ export default {
   width: 100%;
 }
 
+#details {
+  width: 93.5%;
+}
+
 @media screen and (min-width: 900px) {
   .content {
     width: 48%;
@@ -214,19 +217,34 @@ export default {
   font-size: 32px;
   margin: 2rem 0;
 }
+
 .content__img {
-  min-height: 230px;
-  max-width: 560px;
-  height: 100%;
+  height: 230px;
+  width: 100%;
+  max-width: 320px;
+  overflow: hidden;
 }
+
+@media screen and (min-width: 1200px) {
+  .content__img {
+    height: 400px;
+    max-width: 560px;
+  }
+  #details {
+    width: 100%;
+  }
+}
+
 .content__img img {
   object-fit: cover;
 }
+
 .list {
   margin: 0 0 2rem;
   min-width: 264px;
   font-size: 1em;
 }
+
 .list__inline li {
   margin: 0 1rem 0 0;
   display: inline-block;

@@ -1,16 +1,8 @@
 <template>
-  <div class="row">
+  <div class="row" id="results" ref="pageResults">
     <div class="row flex-center flex-wrap--start" key="s0">
       <skeleton-text animated v-if="isLoading" width="40%" height="40%"></skeleton-text>
-      <p
-        class="results"
-        id="results"
-        tabindex="-1"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        v-else
-      >
+      <p class="results" tabindex="-1" role="status" aria-live="polite" aria-atomic="true" v-else>
         <span v-if="getData.length > 0">
           Showing {{ getData.length }} &ndash;
           {{ $store.state.regionTotals[$store.state.selection] }} countries of
@@ -43,10 +35,12 @@
           :to="{
             name: 'detail',
             params: {
-              id: card.alpha3Code ? card.alpha3Code.toLowerCase() : 'abc'
-            }
+              id: validateId(card.alpha3Code)
+            },
+            hash: '#details'
           }"
           tag="a"
+          :id="validateId(card.alpha3Code)"
         >
           <div class="card__img">
             <skeleton-text animated v-if="isLoading"></skeleton-text>
@@ -127,6 +121,11 @@ export default {
       )
         return false
       else return true
+    },
+    validateId(value) {
+      if (value) {
+        return value.toLowerCase()
+      } else return 'abc'
     }
   },
   watch: {

@@ -35,7 +35,6 @@ input::placeholder {
   font-size: 0.875rem;
   background-color: #fff;
   color: #111517;
-  overflow: hidden;
 }
 
 .app-input__placeholder {

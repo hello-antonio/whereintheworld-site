@@ -1,6 +1,8 @@
 <template>
   <div class="row flex-wrap">
-    <h1 class="app-title">{{ title }}</h1>
+    <router-link to="/" class="theme-light">
+      <h1 class="app-title">{{ title }}</h1>
+    </router-link>
     <!-- Dark mode Button -->
     <app-button :event="handleClick">
       <template>
