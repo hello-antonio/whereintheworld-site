@@ -3,7 +3,7 @@ import axios from 'axios'
 const API =
   process.env.NODE_ENV === 'development'
     ? '/api'
-    : 'https://restcountries.com/v3.1/all'
+    : 'https://restcountries.com/v3.1'
 
 export default {
   getAll() {
